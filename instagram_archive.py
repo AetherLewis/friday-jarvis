@@ -19,7 +19,7 @@ import json
 import re
 import logging
 from datetime import datetime
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional
 from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from dotenv import load_dotenv
