@@ -56,23 +56,50 @@ async def send_email(
     email_accounts = {
         "miguel13": {
             "user": os.getenv("GMAIL_USER_1"),
-            "password": os.getenv("GMAIL_PASS_1")
+            "password": os.getenv("GMAIL_PASS_1").strip() if os.getenv("GMAIL_PASS_1") else None
         },
         "miguel07": {
             "user": os.getenv("GMAIL_USER_2"),
-            "password": os.getenv("GMAIL_PASS_2")
+            "password": os.getenv("GMAIL_PASS_2").strip() if os.getenv("GMAIL_PASS_2") else None
         },
         "miguellewis": {
             "user": os.getenv("GMAIL_USER_3"),
-            "password": os.getenv("GMAIL_PASS_3")
+            "password": os.getenv("GMAIL_PASS_3").strip() if os.getenv("GMAIL_PASS_3") else None
         }
     }
 
     account = email_accounts.get(from_account.lower())
-    if not account:
-        return "Invalid email account selected."
+    if not account or not account["user"] or not account["password"]:
+        return "Invalid email account selected or credentials missing."
 
     gmail_user = account["user"]
     gmail_password = account["password"]
 
-    # --- keep the rest of your original send_email code ---
+    try:
+        # Create message
+        msg = MIMEMultipart()
+        msg['From'] = gmail_user
+        msg['To'] = to_email
+        if cc_email:
+            msg['Cc'] = cc_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(message, 'plain'))
+
+        # Connect to server
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(gmail_user, gmail_password)
+
+        # Send email
+        to_addrs = [to_email]
+        if cc_email:
+            to_addrs.append(cc_email)
+        text = msg.as_string()
+        server.sendmail(gmail_user, to_addrs, text)
+        server.quit()
+
+        logging.info(f"Email sent successfully from {gmail_user} to {to_email}")
+        return "Email sent successfully."
+    except Exception as e:
+        logging.error(f"Error sending email: {e}")
+        return f"Failed to send email: {str(e)}"

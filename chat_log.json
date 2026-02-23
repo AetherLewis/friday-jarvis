@@ -1,0 +1,39 @@
+{
+  "messages": [
+    {
+      "date": "2024-01-15 10:30:00",
+      "sender": "Alice",
+      "text": "Check out this amazing tech tutorial! https://instagram.com/reels/CX1a2b3c4d5/ The new features are incredible and easy to follow."
+    },
+    {
+      "date": "2024-01-15 14:45:00",
+      "sender": "Bob",
+      "text": "This cooking show is hilarious 😂 https://instagram.com/reels/CX9z8y7x6w5v/ You have to watch the part at 45 seconds!"
+    },
+    {
+      "date": "2024-01-16 09:15:00",
+      "sender": "Alice",
+      "text": "Found this beautiful travel vlog! https://instagram.com/reels/CX5e4r3t2y1u/ The photography is stunning, especially the sunset scenes."
+    },
+    {
+      "date": "2024-01-16 16:20:00",
+      "sender": "Charlie",
+      "text": "This fitness routine changed my life! https://instagram.com/reels/CX0a1b2c3d4e/ Only 20 minutes a day and you'll see results."
+    },
+    {
+      "date": "2024-01-17 11:00:00",
+      "sender": "Diana",
+      "text": "Mind-blowing science experiment https://instagram.com/reels/CX6f5g4h3i2j/ I never knew physics could be this entertaining!"
+    },
+    {
+      "date": "2024-01-17 13:30:00",
+      "sender": "Bob",
+      "text": "Dog doing tricks 🐕 https://instagram.com/reels/CX2k1l0m9n8o/ The ending had me crying with laughter"
+    },
+    {
+      "date": "2024-01-18 08:45:00",
+      "sender": "Alice",
+      "text": "New music release! https://instagram.com/reels/CXp8q7r6s5t4u/ This artist is the future of music, seriously talented."
+    }
+  ]
+}
