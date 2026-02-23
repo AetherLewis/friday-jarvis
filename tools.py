@@ -49,30 +49,66 @@ async def send_email(
     to_email: str,
     subject: str,
     message: str,
-    from_account: str,    # NEW
+    from_account: str,
     cc_email: Optional[str] = None
 ) -> str:
-    
+    """
+    Sends an email via Gmail SMTP using the selected account.
+    """
+    # Define email accounts from environment variables
     email_accounts = {
         "miguel13": {
             "user": os.getenv("GMAIL_USER_1"),
-            "password": os.getenv("GMAIL_PASS_1")
+            "password": os.getenv("GMAIL_PASS_1", "").strip() if os.getenv("GMAIL_PASS_1") else None
         },
         "miguel07": {
             "user": os.getenv("GMAIL_USER_2"),
-            "password": os.getenv("GMAIL_PASS_2")
+            "password": os.getenv("GMAIL_PASS_2", "").strip() if os.getenv("GMAIL_PASS_2") else None
         },
         "miguellewis": {
             "user": os.getenv("GMAIL_USER_3"),
-            "password": os.getenv("GMAIL_PASS_3")
+            "password": os.getenv("GMAIL_PASS_3", "").strip() if os.getenv("GMAIL_PASS_3") else None
         }
     }
 
+    # Validate account selection
     account = email_accounts.get(from_account.lower())
-    if not account:
-        return "Invalid email account selected."
+    if not account or not account["user"] or not account["password"]:
+        error_msg = "Invalid email account selected or credentials missing."
+        logging.error(error_msg)
+        return error_msg
 
     gmail_user = account["user"]
     gmail_password = account["password"]
 
-    # --- keep the rest of your original send_email code ---
+    try:
+        # Create the email message
+        msg = MIMEMultipart()
+        msg['From'] = gmail_user
+        msg['To'] = to_email
+        if cc_email:
+            msg['Cc'] = cc_email
+        msg['Subject'] = subject
+        msg.attach(MIMEText(message, 'plain'))
+
+        # Connect to Gmail SMTP server
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(gmail_user, gmail_password)
+
+        # Send the email
+        to_addrs = [to_email]
+        if cc_email:
+            to_addrs.append(cc_email)
+        text = msg.as_string()
+        server.sendmail(gmail_user, to_addrs, text)
+        server.quit()
+
+        success_msg = f"Email sent successfully from {gmail_user} to {to_email}"
+        logging.info(success_msg)
+        return success_msg
+
+    except Exception as e:
+        error_msg = f"Failed to send email: {str(e)}"
+        logging.error(error_msg)
+        return error_msg
