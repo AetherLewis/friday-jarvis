@@ -23,3 +23,12 @@ SESSION_INSTRUCTION = """
     Begin the conversation by saying: " Hi my name is Friday, your personal assistant, how may I help you? "
 """
 
+# prompts.py
+generate_email_prompt = """
+Write a professional email from {from_account} to {to_email} about {topic}.
+"""
+
+summarize_email_prompt = """
+Summarize the following email into 3 bullet points:
+{email_body}
+"""
