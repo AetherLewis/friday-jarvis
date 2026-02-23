@@ -53,18 +53,22 @@ async def send_email(
     cc_email: Optional[str] = None
 ) -> str:
     
+    pass1 = os.getenv("GMAIL_PASS_1")
+    pass2 = os.getenv("GMAIL_PASS_2")
+    pass3 = os.getenv("GMAIL_PASS_3")
+    
     email_accounts = {
         "miguel13": {
             "user": os.getenv("GMAIL_USER_1"),
-            "password": os.getenv("GMAIL_PASS_1").strip() if os.getenv("GMAIL_PASS_1") else None
+            "password": pass1.strip() if pass1 else None
         },
         "miguel07": {
             "user": os.getenv("GMAIL_USER_2"),
-            "password": os.getenv("GMAIL_PASS_2").strip() if os.getenv("GMAIL_PASS_2") else None
+            "password": pass2.strip() if pass2 else None
         },
         "miguellewis": {
             "user": os.getenv("GMAIL_USER_3"),
-            "password": os.getenv("GMAIL_PASS_3").strip() if os.getenv("GMAIL_PASS_3") else None
+            "password": pass3.strip() if pass3 else None
         }
     }
 
